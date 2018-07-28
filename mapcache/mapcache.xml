@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapcache>
+
+<!-- ===== CACHES DEFINITIONS ===== -->
+
+<cache name="disk" type="disk">
+    <base>/var/www/sitawms/tmp/ms_tmp/cache</base>  
+    <symlink_blank/>
+</cache>
+
+
+<cache name="azure" type="azure">
+	<url>https://mapcachestorage.blob.core.windows.net/tiles/{tileset}/{grid}/{z}/{x}/{y}/{ext}</url>
+	<headers>
+		<x-ms-version>2017-07-29</x-ms-version>
+		<Host>mapcachestorage.blob.core.windows.net</Host>
+	</headers>
+	<id>mapcachestorage</id>
+	<secret>j0PhmXktKk+RjlR2TDaQWPlDrqJvwpjT0Wlt+YUFDxYhRJUpvUiq2jycHFhiuvpASSpyli8dKQzttkbh/alJhQ==</secret>
+	<container>tiles</container>
+	<auto_expire>604800</auto_expire>
+</cache>
+
+<!-- ===== END CACHES DEFINITIONS ===== -->
+
+
+<!-- ===== SOURCES DEFINITIONS ===== -->
+
+<source name="srcwayp" type="wms">
+  <getmap>
+     <transparent>true</transparent>
+     <params>
+	 <FORMAT>image/png</FORMAT>
+         <LAYERS>WAYPOINTS</LAYERS>
+         <srs>EPSG:3857</srs>
+     </params>
+  </getmap>
+  <http>
+     <url>http://52.235.41.191/sitawms/navigation/</url>
+  </http>
+</source>
+
+<source name="srcnavaids" type="wms">
+  <getmap>
+     <transparent>true</transparent>
+     <params>
+	 <FORMAT>image/png</FORMAT>
+         <LAYERS>NAVAIDS</LAYERS>
+         <srs>EPSG:3857</srs>
+     </params>
+  </getmap>
+  <http>
+     <url>http://127.0.0.1/sitawms/sitawms/navigation/</url>
+  </http>
+</source>
+
+
+<source name="srcairways" type="wms">
+  <getmap>
+     <transparent>true</transparent>
+     <params>
+	 <FORMAT>image/png</FORMAT>
+         <LAYERS>AIRWAYS</LAYERS>
+         <srs>EPSG:3857</srs>
+     </params>
+  </getmap>
+  <http>
+     <url>http://127.0.0.1/sitawms/navigation/</url>
+  </http>
+</source>
+
+
+<!-- ===== END SOURCES DEFINITIONS ===== -->
+
+
+<!--- ===== TILESETS DEFINITIONS ===== -->
+
+<tileset name="wayp">
+  <source>srcwayp</source>
+  <cache>azure</cache>
+  <grid>GoogleMapsCompatible</grid>
+  <format>mypng</format>
+  <metatile>5 5</metatile>
+  <metabuffer>10</metabuffer>
+  <expires>10</expires>
+</tileset>
+
+<tileset name="navaids">
+  <source>srcnavaids</source>
+  <cache>azure</cache>
+  <grid>GoogleMapsCompatible</grid>
+  <format>mypng</format>
+  <metatile>5 5</metatile>
+  <metabuffer>10</metabuffer>
+  <expires>10</expires>
+</tileset>
+
+
+<tileset name="airs">
+  <source>srcairways</source>
+  <cache>azure</cache>
+  <grid>GoogleMapsCompatible</grid>
+  <format>mypng</format>
+  <metatile>5 5</metatile>
+  <metabuffer>10</metabuffer>
+  <expires>10</expires>
+</tileset>
+
+
+
+<!-- ===== END TILESETS DEFINITIONS ===== -->
+
+<format name="mypng" type ="PNG">
+   <compression>fast</compression>
+   <colors>256</colors>
+</format>
+
+<service type="wms" enabled="true">
+  <full_wms>assemble</full_wms>
+  <resample_mode>bilinear</resample_mode>
+  <format>PNG</format>
+  <maxsize>4096</maxsize>
+</service>
+
+<service type="wmts" enabled="true"/>
+<service type="tms" enabled="true"/>
+<service type="kml" enabled="true"/>
+<service type="gmaps" enabled="true"/>
+<service type="ve" enabled="true"/>
+<service type="demo" enabled="true"/>
+</mapcache>

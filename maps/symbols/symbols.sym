@@ -1,0 +1,63 @@
+SYMBOLSET
+  SYMBOL
+    NAME "navaid"
+    TYPE pixmap
+    IMAGE "icons/navaid.png"
+  END
+  SYMBOL
+    NAME "ndb"
+    TYPE pixmap
+    IMAGE "icons/ndb.png"
+  END
+  SYMBOL
+    NAME "vor"
+    TYPE pixmap
+    IMAGE "icons/vor.png"
+  END  
+  SYMBOL
+    NAME "circle"
+    TYPE ellipse
+    FILLED true
+    POINTS
+      1 1
+    END
+  END
+  SYMBOL
+    NAME "triangle"
+    TYPE vector
+    FILLED TRUE
+    POINTS
+      0 4
+      2 0
+      4 4
+      0 4
+    END
+  END
+  SYMBOL
+    NAME "rectangle"
+    TYPE vector
+    POINTS
+      0 2
+      2 2
+      2 0
+      0 0
+      0 2
+    END
+  END
+  SYMBOL
+    NAME "startarrow"
+    TYPE vector
+    FILLED true
+    POINTS
+      0 0.4
+      3 0.4
+      3 0
+      5 0.8
+      3 1.6
+      3 1.2
+      0 1.2
+      0 0.4
+    END # POINTS
+    #ANCHORPOINT 0 0.5
+  END # SYMBOL 
+END

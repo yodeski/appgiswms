@@ -1,0 +1,111 @@
+MAP
+	FONTSET "fonts/fonts.lst"
+    SYMBOLSET "symbols/symbols.sym"
+    SHAPEPATH "data/basemaps"
+	IMAGETYPE AGG_PNG
+    SIZE 800 600
+	EXTENT -18588742.04 5075777.12 -1116409.35 18675635.19
+	UNITS meters
+	DEBUG 3
+	CONFIG "MS_ERRORFILE" "/var/www/appgiswms/tmp/ms_error.log"
+	CONFIG "PROJ_LIB" "/usr/share/proj/"
+    PROJECTION
+		"init=epsg:3857"
+	END
+	WEB
+		TEMPLATE 	"/var/www/template.html"
+		IMAGEPATH	"/tmp/" 
+		IMAGEURL	"/ms_tmp/"
+		METADATA
+			"wms_title" "SITA World Basemap"
+			"wms_contactperson"   "yodeski.alvarez@sita.aero"
+			"wms_contactorganization" "SITAONAIR"
+			"wms_onlineresource" "http://52.235.41.191:8080/appgiswms/base/"
+			"wms_srs" "EPSG:4269 EPSG:4326 EPSG:3857 EPSG:102018"
+			"ows_enable_request" "*"
+			"labelcache_map_edge_buffer" "-10"
+			"ms_enable_modes" "*"
+			"wfs_srs" "EPSG:4269 EPSG:4326 EPSG:3857 EPSG:102018"
+			"wfs_onlineresource"  "http://52.235.41.191:8080/appgiswms/base/"
+		END
+	END
+	
+	
+	OUTPUTFORMAT
+		NAME 'AGG_PNG'
+		DRIVER AGG/PNG
+		IMAGEMODE RGBA
+		FORMATOPTION "QUANTIZE_FORCE=OFF"
+		TRANSPARENT FALSE  
+	END
+	
+	OUTPUTFORMAT    
+		NAME "png8bitaggauto"    
+		DRIVER "AGG/PNG"    
+		MIMETYPE "image/png"    
+		IMAGEMODE "pc256"    
+		EXTENSION "png"    
+		FORMATOPTION "TRANSPARENT=ON"    
+		FORMATOPTION "INTERLACE=OFF"    
+		FORMATOPTION "QUANTIZE_FORCE=ON"    
+		FORMATOPTION "QUANTIZE_COLORS=256" 
+	END
+	
+	SYMBOL
+		name 'citycircle'
+		type ellipse
+		points 1 1 end
+		filled true
+	END
+	
+	
+	#{ ZOOM 0 
+	LAYER
+		TYPE POLYGON
+		STATUS ON
+		GROUP "basem"
+		NAME "land0"
+		PROCESSING "APPROXIMATION_SCALE=full"
+		MINSCALEDENOM 332808204
+		MAXSCALEDENOM 99999999999 #zoom 0
+		CONNECTIONTYPE postgis
+		CONNECTION "sslmode=verify-ca sslrootcert=/var/www/appgiswms/root.crt host=localhost dbname=basemap user=pgadmin password=MySecretPwd?135 port=5432"
+		DATA "geom from (select * from simplified_land_polygons) as foo using unique gid"
+        PROJECTION
+			"init=epsg:3857"
+		END
+		CLASS
+			STYLE
+				COLOR "#f7f7f7"
+			END
+		END
+	END
+	
+    # LAYER
+	# 	GROUP "default"
+	# 	STATUS ON
+	# 	MAXSCALEDENOM 99999999999 #zoom 0
+	# 	MINSCALEDENOM 332808204
+	# 	TYPE "LINE"
+	# 	NAME "borders0"
+	# 	CONNECTIONTYPE "postgis"
+	# 	CONNECTION "sslmode=verify-ca sslrootcert=/var/www/appgiswms/root.crt host=localhost dbname=basemap user=pgadmin password=MySecretPwd?135 port=5432"
+	# 	DATA "geom from (select * from boundaries) as foo using unique gid using srid=3857"
+	# 	PROJECTION
+    #         "proj=longlat"
+    #         "ellps=WGS84"
+    #         "datum=WGS84"
+    #         "no_defs"
+    #     END
+    #     CLASS
+	# 		STYLE
+	# 			WIDTH 0.3
+	# 			COLOR "#bababa"
+	# 		END
+	# 	END
+	# END
+
+	#} ZOOM 0
+
+# END
+END
